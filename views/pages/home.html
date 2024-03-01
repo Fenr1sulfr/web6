@@ -3,64 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>View Posts</title>
+    <title>View Users</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">My Blog</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/create">Create</a>
-            </li>
-           
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">My Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/post">Posts <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/create">Create</a>
+                </li>
+               
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Users</h1>
+
+        <div id="userContainer">
+            <!-- User data will be dynamically added here -->
+        </div>
+
+        <script>
+            // Function to delete a user by username
+            function deleteUser(username) {
+                // Send a DELETE request to the server
+                console.log("Works!")
+                fetch(`/delete/${username}`, {
+                    method: 'DELETE',
+                })
+                .then(response => response.json())
+                .then(result => {
+                    // Remove the deleted user card from the UI
+                    const userCard = document.getElementById(`userCard_${username}`);
+                    userCard.parentNode.removeChild(userCard);
+                })
+                .catch(error => console.error('Error deleting user:', error));
+            }
+
+            // Fetch users and update HTML
+            fetch('/retrieve')
+                .then(response => response.json())
+                .then(users => {
+                    const userContainer = document.getElementById('userContainer');
+                    users.forEach(user => {
+                        const userCard = document.createElement('div');
+                        userCard.id = `userCard_${user.username}`;
+                        userCard.className = 'card mt-3';
+                        userCard.innerHTML = `
+                            <div class="card-body">
+                                <h5 class="card-title">${user.username}</h5>
+                                <button class="btn btn-danger" onclick="deleteUser('${user.username}')">Delete User</button>
+                            </div>
+                        `;
+                        userContainer.appendChild(userCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching users:', error));
+        </script>
+
     </div>
-</nav>
 
-<div class="container mt-5">
-    <h1 class="mb-4">Users</h1>
-
-    <div id="userContainer">
-        <!-- User data will be dynamically added here -->
-    </div>
-
-    <script>
-        // Fetch users and update HTML
-        fetch('/retrieve')
-            .then(response => response.json())
-            .then(users => {
-                const userContainer = document.getElementById('userContainer');
-                users.forEach(user => {
-                    const userCard = document.createElement('div');
-                    userCard.className = 'card mt-3';
-                    userCard.innerHTML = `
-                        <div class="card-body">
-                            <h5 class="card-title">${user.username}</h5>
-                            <p class="card-text">Email: ${user.mail}</p>
-                        </div>
-                    `;
-                    userContainer.appendChild(userCard);
-                });
-            })
-            .catch(error => console.error('Error fetching users:', error));
-    </script>
-
-</div>
-
-<!-- Include Bootstrap JS and Popper.js -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

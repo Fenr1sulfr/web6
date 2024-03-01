@@ -1,13 +1,15 @@
+const { ObjectId } = require("mongodb");
 const mongoose =require("mongoose");
 const Schema =mongoose.Schema;
 const postSchema=new Schema({
+    author:String,
     body:String,
-    permalink:String,
-    title:String,
-    tags:Array,
     comments:Array,
     date:Date,
+    permalink:String,
+    tags:Array,
+    title:String,
 });
 
-const postModel =mongoose.model('post',postSchema,'sample_training.posts');
+const postModel =mongoose.model('posts',postSchema);
 module.exports= postModel

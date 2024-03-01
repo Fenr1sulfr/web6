@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://sulfur:1234@cluster0.depm68j.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://sulfur:1234@cluster0.depm68j.mongodb.net/sample_training?retryWrites=true&w=majority";
 let dbConnect;
 
 module.exports = {
