@@ -16,14 +16,14 @@ module.exports = function (req, res, next) {
     const cookies = cookie.parse(req.headers.cookie || '');
       const token = cookies.jwt_token;
     if (!token) {
-      return res.status(400).json({ message: "Auth please" });
+      return res.redirect('/auth'); // Redirect to /auth if token is not present;
     }
-
+    
     const decodedData = jwt.verify(token, secret);
     req.user = decodedData;
     next();
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ message: "Auth please" });
+    return res.redirect('/auth');;
   }
 };
