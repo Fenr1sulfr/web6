@@ -2,21 +2,19 @@ const express =require("express")
 const {connectDB,getDB}=require('./db')
 const PORT =3000;
 const bodyParser=require(`body-parser`)
+
 const helmet = require('helmet');
 const app =express()
 app.set('view engine', 'ejs');
 app.use(bodyParser.json())
-// app.use( helmet({
-//   contentSecurityPolicy: {
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       scriptSrc: ["'self'",'apiEndpointsauth.js', 'code.jquery.com', 'cdn.jsdelivr.net', 'stackpath.bootstrapcdn.com', "'unsafe-inline'"],
-//             styleSrc: ["'self'", 'cdn.jsdelivr.net', 'stackpath.bootstrapcdn.com','style-src','script-src-attr'],
-//       fontSrc: ["'self'", 'cdn.jsdelivr.net'],
-//       imgSrc: ["'self'", 'data:'],
-//     },
-//   },
-// }));
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
+// app.use(helmet({
+//   contentSecurityPolicy: false,
+// }))
 //middleware
 const authMiddle=require('./middleware/authmiddle')
 //Routes
