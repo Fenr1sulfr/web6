@@ -89,7 +89,7 @@
 
                 postRow.innerHTML = `
                     <h5 class="mb-1">${post.title}</h5>
-                    <p class="post-body" id="postBody_${post._id}">${post.body.substring(0, 100)}</p>
+                    <div class="post-body" id="postBody_${post._id}">${post.body.substring(0, 100)}</div>
                     <button class="btn btn-link" onclick="showFullPost('${post._id}')">Show Full Post</button>
                     <small class="text-muted">${post.date}</small>
                     <a href="${post.permalink}" class="card-link">Permalink</a>
