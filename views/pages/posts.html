@@ -105,9 +105,11 @@
 
     // Function to show the full post
     function showFullPost(postId) {
-        const postBody = document.getElementById(`postBody_${postId}`);
-        postBody.textContent = posts.find(post => post._id === postId).body;
-    }
+    const postBody = document.getElementById(`postBody_${postId}`);
+    const fullPostContent = posts.find(post => post._id === postId).body;
+    postBody.textContent = fullPostContent;
+}
+
 
     // Call the function to populate the post rows
     populatePostRows();
